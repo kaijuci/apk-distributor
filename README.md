@@ -5,3 +5,7 @@
 ## Firebase App Distribution
 
 TBD
+
+## CI / CD
+
+The project uses `Tekton` project for CI/CD. The pipeline is defined in `.kaijuci` directory.
