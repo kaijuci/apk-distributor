@@ -18,7 +18,10 @@ var rootCmd = &cobra.Command{
 	},
 }
 
-func init() {}
+func init() {
+	versionCmd := NewVersionCmd()
+	rootCmd.AddCommand(versionCmd)
+}
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
