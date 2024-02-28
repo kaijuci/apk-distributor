@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"github.com/kaijuci/apk-distributor/cmd/apk-distributor/catalog"
+)
 
 func main() {
-	fmt.Println("here we go!")
+	catalog.Execute()
 }
