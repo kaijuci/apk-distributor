@@ -14,6 +14,8 @@ RUN go mod download -x
 
 FROM base AS go-build
 
+ARG RELEASE_VERSION="0.0"
+
 COPY . .
 
 RUN tree .
@@ -25,9 +27,10 @@ RUN CGO_CFLAGS_ALLOW='-Xpreprocessor' \
     GOARCH=amd64 \
     GO111MODULE=on \
     go build \
-    -ldflags "-X github.com/kaijuci/apk-publisher/vars.Version=$(git rev-parse --short HEAD)" \
+    -ldflags "-X github.com/kaijuci/apk-publisher/vars.SHA=$(git rev-parse --short HEAD)" \
+    -ldflags "-X github.com/kaijuci/apk-publisher/vars.Version=$RELEASE_VERSION" \
     -o apkpublish \
-    cmd/main.go
+    cmd/apk-distributor/main.go
 
 # test
 RUN CGO_CFLAGS_ALLOW='-Xpreprocessor' \
