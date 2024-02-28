@@ -1,4 +1,4 @@
-FROM golang:1.22-alpine
+FROM golang:1.22-alpine AS build
 LABEL org.opencontainers.image.authors="sumeet@kaiju.ci"
 
 ARG SHA="unknown"
@@ -22,5 +22,9 @@ RUN CGO_CFLAGS_ALLOW='-Xpreprocessor' \
     -o apkpublish \
     cmd/apk-distributor/main.go
 
-# echo version - mostly to satisfy kaniko
+FROM scratch
+
+WORKDIR /app
+COPY --from=build /app/apkpublish .
+
 ENTRYPOINT ["/app/apkpublish"]
