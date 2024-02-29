@@ -22,7 +22,7 @@ RUN tree .
 
 # build
 RUN CGO_CFLAGS_ALLOW='-Xpreprocessor' \
-    CGO_ENABLED=1 \
+    CGO_ENABLED=0 \
     GOOS=linux \
     GOARCH=amd64 \
     GO111MODULE=on \
@@ -34,14 +34,11 @@ RUN CGO_CFLAGS_ALLOW='-Xpreprocessor' \
 
 # test
 RUN CGO_CFLAGS_ALLOW='-Xpreprocessor' \
-    CGO_ENABLED=1 \
+    CGO_ENABLED=0 \
     GOOS=linux \
     GOARCH=amd64 \
     GO111MODULE=on \
-    go test -v -cover ./... 2>&1 | tee results.out
-
-# print report
-RUN cat results.out
+    go test -v ./...
 
 # echo version - mostly to satisfy kaniko
 ENTRYPOINT ["/app/apkpublish"]

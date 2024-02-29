@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/kaijuci/apk-distributor/env"
 	"github.com/spf13/cobra"
 )
 
@@ -19,8 +20,15 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
+	env, err := env.NewEnv()
+	if err != nil {
+		log.Panicf("error: %v\n", err)
+	}
+	log.Printf("env: %v\n", env)
+
 	versionCmd := NewVersionCmd()
-	rootCmd.AddCommand(versionCmd)
+	firebaseCmd := NewFirebaseCmd(env.FirebaseCredentialsFile)
+	rootCmd.AddCommand(versionCmd, firebaseCmd)
 }
 
 func Execute() {
